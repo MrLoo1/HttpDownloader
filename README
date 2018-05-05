@@ -1,0 +1,46 @@
+1.实现方案：
+1)采用socket编程的方式;
+2)通过http head获取Content-Length和Content-MD5;
+3)通过http get与Range, 多线程分块下载;
+4)为了提供IO性能，采用内存映射文件;
+5)营造良好的运行环境，采用限制最大线程数下载.
+
+２.还涉及：
+1)URL解析
+2)response解析
+3)指定大小的文件创建
+4)日志记录
+5)C++多态
+6)MD5相关的base64编码和MD5算法调用
+
+3.文件结构
+.
+├── downloader　						编译出来的可运行文件
+├── HttpClient.h					http客户端（纯虚类）
+├── HttpDownloader.cpp				多线程下载类实现
+├── HttpDownloader.h				多线程下载类头文件
+├── HttpResponse.cpp				http响应解析实现
+├── HttpResponse.h					http响应解析头文件
+├── HttpUrl.cpp						http　URL解析实现
+├── HttpUrl.h						http　URL解析头文件
+├── Logger.cpp						日志记录类实现
+├── Logger.h						日志记录类头文件
+├── main.cpp						主函数
+├── Makefile						makefile
+├── README							this,　本文件
+├── SocketHttpClient.cpp			http客户端socket类现实
+├── SocketHttpClient.h				http客户端socket类头文件
+├── Utils.cpp						工具类实现
+└── Utils.h							工具类头文件
+
+4.运行说明
+Usage: ./downloader url local
+e.g.   ./downloader http://nginx.org/download/nginx-1.14.0.tar.gz ./nginx.tar.gz
+其中：
+    url: 网络请求URL
+	local: 本地存放文件路径
+	
+5. 开发环境 Ubuntu 14.04.5 LTS
+1) gcc version: gcc version 5.4.1
+2) 动态库: libpthread.so libcrypto.so
+	
